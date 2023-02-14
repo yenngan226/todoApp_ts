@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { Todo } from '../@types/todo.type'
+import { Todo } from '../../@types/todo.type'
+
 import TaskInput from '../TaskInput'
 import TaskList from '../TaskList'
 import styles from './todoList.module.scss'
@@ -83,9 +84,9 @@ export default function TodoList() {
     <div className={styles.todoList}>
       <div className={styles.todoListContainer}>
         <TaskInput addTodo={addTodo} currentTodo={currentTodo} handleSubmitEdit={handleSubmitEdit} />
+
         <TaskList
           handleEditTodo={handleEditTodo}
-          doneTaskList={false}
           todos={notCompletedTask}
           handleCompleteTodo={handleCompleteTodo}
           handleDeleteTodo={handleDeleteTodo}

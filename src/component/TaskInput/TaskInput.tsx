@@ -1,17 +1,17 @@
 import PropTypes from 'prop-types'
 import React, { useEffect, useState } from 'react'
-import { Todo } from '../@types/todo.type'
-import { todoPropType } from '../propTypes/todo.propType'
+import { Todo } from '../../@types/todo.type'
+import { connect } from '../../HOC/connectComponent'
+import { todoPropType } from '../../propTypes/todo.propType'
 import styles from './taskInput.module.scss'
 
 interface TaskInputProps {
   addTodo: (name: string) => void
-
   currentTodo: Todo | null
   handleSubmitEdit: (name: string) => void
 }
 
-export default function TaskInput({ addTodo, currentTodo, handleSubmitEdit }: TaskInputProps) {
+function TaskInput({ addTodo, currentTodo, handleSubmitEdit }: TaskInputProps) {
   const [taskName, setTaskName] = useState<string>('')
 
   useEffect(() => {
@@ -20,7 +20,7 @@ export default function TaskInput({ addTodo, currentTodo, handleSubmitEdit }: Ta
     } else {
       setTaskName('')
     }
-  }, [currentTodo?.id])
+  }, [])
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -49,10 +49,12 @@ export default function TaskInput({ addTodo, currentTodo, handleSubmitEdit }: Ta
     </div>
   )
 }
+// Trong file này export ra HOC nhận TaskInput component làm đối số và trả ra một component mới có 2 prop mới là debug và log
+
+export default connect(TaskInput)
 
 TaskInput.propTypes = {
   addTodo: PropTypes.func.isRequired,
-
   currentTodo: PropTypes.oneOfType([todoPropType, PropTypes.oneOf([null])]),
   handleSubmitEdit: PropTypes.func.isRequired
 }

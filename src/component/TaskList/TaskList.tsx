@@ -1,23 +1,18 @@
 import PropTypes from 'prop-types'
-import { Todo } from '../@types/todo.type'
-import { todoPropType } from '../propTypes/todo.propType'
+import { Todo } from '../../@types/todo.type'
+import { connect } from '../../HOC/connectComponent'
+import { todoPropType } from '../../propTypes/todo.propType'
 
 import styles from './taskList.module.scss'
 
 interface TaskListProps {
-  doneTaskList: boolean
+  doneTaskList?: boolean
   todos: Todo[]
   handleCompleteTodo: (id: string) => () => void
   handleEditTodo: (todo: Todo) => () => void
   handleDeleteTodo: (id: string) => () => void
 }
-export default function TaskList({
-  doneTaskList,
-  todos,
-  handleCompleteTodo,
-  handleEditTodo,
-  handleDeleteTodo
-}: TaskListProps) {
+function TaskList({ doneTaskList, todos, handleCompleteTodo, handleEditTodo, handleDeleteTodo }: TaskListProps) {
   return (
     <div>
       <h2 className={styles.title}>{doneTaskList ? 'Done Task' : 'Pending Task'}</h2>
@@ -50,10 +45,11 @@ export default function TaskList({
     </div>
   )
 }
+export default connect(TaskList)
 
 TaskList.propTypes = {
   doneTaskList: PropTypes.bool,
-  todos: PropTypes.arrayOf(todoPropType),
+  todos: PropTypes.arrayOf(todoPropType).isRequired,
   handleCompleteTodo: PropTypes.func.isRequired,
   handleEditTodo: PropTypes.func.isRequired,
   handleDeleteTodo: PropTypes.func.isRequired
